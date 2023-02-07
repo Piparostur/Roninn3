@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 
 import HelloWorldScene from './scenes/HelloWorldScene'
 
-const config: Phaser.types.core.gamesconfig = {
+const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,
 	width: 800,
 	height: 600,
@@ -13,6 +13,7 @@ const config: Phaser.types.core.gamesconfig = {
 		}
 	},
 	scene: [HelloWorldScene]
+
 
 }
 
