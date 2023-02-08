@@ -24,7 +24,14 @@ export default class HelloWorldScene extends Phaser.Scene {
 
   create() {
     this.add.image(400, 300, 'sky');
+
+    // ------------------------- TEXT -------------------------
+
+      
+
+    // ------------------------- MUSIC -------------------------
     this.sound.play("music", {loop: true, volume: 0.1});
+
 
     // ------------------------- PLATFORMS -------------------------
     this.platforms = this.physics.add.staticGroup({
@@ -72,15 +79,28 @@ export default class HelloWorldScene extends Phaser.Scene {
         this.enemy.setVelocityX(160);
     }
 
-    //Afleiðingar af player/enemy collision
+    // -------------- Game Over if player hits enemy --------------
     this.physics.add.collider(this.player, this.enemy, () => {
         //stop music and restart game
         //Mikilvægt að stoppa sound fyrst greinilega því annars byrjar leikurinn að spila lagið aftur 
         //ofan á original playið.
         this.sound.stopAll();
-        this.scene.restart();
-        console.log("game over");
+
+        //Game Over text
+        var gameOverText = this.add.text(400, 300, "Game Over", {
+            fontSize: '64px',
+            backgroundColor: '#fff', 
+            color: '#000',
+          });
+        gameOverText.setOrigin(0.5, 0.5);
+
+        // Pause 3 seconds and restart game
+        this.time.delayedCall(3000, () => {
+            //Restart game
+            this.scene.restart();
+            console.log("game over");
       });
+    });
 
 
     // ------------------------- CURSORS -------------------------
