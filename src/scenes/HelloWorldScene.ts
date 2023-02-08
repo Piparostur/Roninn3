@@ -50,7 +50,7 @@ export default class HelloWorldScene extends Phaser.Scene {
       this.player!.setVelocityX(160);
       //jump on space but only if touching the ground
     } else if (this.cursors!.space!.isDown && this.player!.body.touching.down) {
-        this.player!.setVelocityY(-160);
+        this.player!.setVelocityY(-330);
     } else {
       this.player!.setVelocityX(0);
     }
