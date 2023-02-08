@@ -16,7 +16,7 @@ const config: Phaser.Types.Core.GameConfig = {
 			gravity: { y: 200 }
 		}
 	},
-	scene: [HelloWorldScene]
+	scene: [HelloWorldScene] // held að start scene fari líka hérna en virkaði ekki þarf að tweaka ehv.
 
 
 }
