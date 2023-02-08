@@ -42,8 +42,11 @@ export default class HelloWorldScene extends Phaser.Scene {
         });
     
     
-    // physics for stars
+    //Stjörnurnar fara ekki í gegnum platformana
     this.physics.add.collider(this.stars, this.platforms);
+
+    //uuuuuu... þetta lætur stjörnurnar klessa á hvor aðra og svo slæda þær saman út af mappinu ???
+    this.physics.add.collider(this.stars, this.stars);
     
     
 
@@ -54,7 +57,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
     this.physics.add.collider(this.player, this.stars); //Þetta er ehv wonky hann er bara að bowla stjörnunum xD
-
+    
 
     // Set up cursors
     this.cursors = this.input.keyboard.createCursorKeys();
