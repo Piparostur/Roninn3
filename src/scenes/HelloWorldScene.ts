@@ -44,15 +44,29 @@ export default class HelloWorldScene extends Phaser.Scene {
   }
 
   update() {
-    if (this.cursors!.left!.isDown) {
-      this.player!.setVelocityX(-160);
+    // ------------------------- LEFT ----------------------------------
+      if (this.cursors!.left!.isDown) {
+      this.player!.setVelocityX(-160); //Hversu hratt á að fara til vinstri
+      // Check if space is pressed and player is touching the ground
+      if (this.cursors!.space!.isDown && this.player!.body.touching.down) {
+        this.player!.setVelocityY(-160); // Hversu hátt á að hoppa
+        this.player!.setVelocityX(-100); // Add additional velocity to the left
+      }
+    
+    // ------------------------- RIGHT ----------------------------------
     } else if (this.cursors!.right!.isDown) {
-      this.player!.setVelocityX(160);
-      //jump on space but only if touching the ground
+      this.player!.setVelocityX(160); // Hversu hratt á að fara til hægri 
+      // Tvö skilyrði fyrir hoppi þ.e. þú þarft að ýta á space og þú þarft að vera á jörðinni
+      if (this.cursors!.space!.isDown && this.player!.body.touching.down) {
+        this.player!.setVelocityY(-160); // Hversu hátt á að hoppa 
+        this.player!.setVelocityX(100); // Hvesu  mikið velocity þegar þú hoppar á ferð (hægri)
+      }
+
+    // ------------------------- STATIONARY JUMP -------------------------
     } else if (this.cursors!.space!.isDown && this.player!.body.touching.down) {
-        this.player!.setVelocityY(-330);
+      this.player!.setVelocityY(-160);
     } else {
       this.player!.setVelocityX(0);
     }
   }
-}
+}  
