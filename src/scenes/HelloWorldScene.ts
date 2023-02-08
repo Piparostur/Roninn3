@@ -5,6 +5,7 @@ export default class HelloWorldScene extends Phaser.Scene {
   private player?: Phaser.Physics.Arcade.Sprite;
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   private stars?: Phaser.Physics.Arcade.Group;
+  private enemy?: Phaser.Physics.Arcade.Sprite;
   constructor() {
   super('hello-world');
   }
@@ -17,6 +18,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     this.load.audio("music", "assets/BaB.mp3");
+    this.load.spritesheet('Ninja_enemy', 'assets/Ninja_enemy.png', { frameWidth: 32, frameHeight: 48 });
 }
 
 
@@ -57,6 +59,24 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.player.setCollideWorldBounds(true);
     this.physics.add.collider(this.player, this.stars); //Þetta er ehv wonky hann er bara að bowla stjörnunum xD
     this.physics.add.collider(this.player, this.platforms);
+
+
+    // --------------------- Ninja Enemy -------------------------
+    this.enemy = this.physics.add.sprite(400, 450, 'Ninja_enemy');
+    this.enemy.setBounce(0.2);
+    this.enemy.setCollideWorldBounds(true);
+    this.physics.add.collider(this.enemy, this.platforms);
+    if (this.player.x > this.enemy.x) {
+        this.enemy.setVelocityX(-160);
+    } else {
+        this.enemy.setVelocityX(160);
+    }
+
+    //Afleiðingar af player/enemy collision
+    this.physics.add.collider(this.enemy, this.player, () => {
+        this.player!.destroy(); //Þetta er ekki að virka
+    });
+
 
 
     // ------------------------- CURSORS -------------------------
