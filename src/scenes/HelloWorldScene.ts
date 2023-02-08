@@ -73,10 +73,14 @@ export default class HelloWorldScene extends Phaser.Scene {
     }
 
     //Afleiðingar af player/enemy collision
-    this.physics.add.collider(this.enemy, this.player, () => {
-        this.player!.destroy(); //Þetta er ekki að virka
-    });
-
+    this.physics.add.collider(this.player, this.enemy, () => {
+        //stop music and restart game
+        //Mikilvægt að stoppa sound fyrst greinilega því annars byrjar leikurinn að spila lagið aftur 
+        //ofan á original playið.
+        this.sound.stopAll();
+        this.scene.restart();
+        console.log("game over");
+      });
 
 
     // ------------------------- CURSORS -------------------------
