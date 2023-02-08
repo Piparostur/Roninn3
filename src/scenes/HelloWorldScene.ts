@@ -16,7 +16,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-  }
+}
 
 
   create() {
@@ -59,7 +59,17 @@ export default class HelloWorldScene extends Phaser.Scene {
 
     // ------------------------- CURSORS -------------------------
     this.cursors = this.input.keyboard.createCursorKeys();
+    
 
+
+    // ------------------------- SHOOTING -------------------------
+    let bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bomb');
+    bullet.setVelocityX(100);
+    bullet.setVelocityY(100);
+    this.physics.world.enable(bullet);
+    bullet.body.setSize(10, 10);
+    bullet.body.setAllowGravity(false);
+    
       
   }
 
@@ -89,5 +99,8 @@ export default class HelloWorldScene extends Phaser.Scene {
     } else {
       this.player!.setVelocityX(0);
     }
+
+    // ------------------------- SHOOTING -------------------------
+    // Insert something cool here..
   }
 }  
