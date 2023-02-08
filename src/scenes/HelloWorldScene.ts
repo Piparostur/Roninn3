@@ -4,7 +4,7 @@ export default class HelloWorldScene extends Phaser.Scene {
   private platforms?: Phaser.Physics.Arcade.StaticGroup;
   private player?: Phaser.Physics.Arcade.Sprite;
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
-
+  private stars?: Phaser.Physics.Arcade.Group;
   constructor() {
     super('hello-world');
   }
@@ -32,7 +32,18 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.platforms.create(600, 400, 'ground');
     this.platforms.create(50, 250, 'ground');
     this.platforms.create(750, 220, 'ground');
+    
+    // Add stars
+    this.stars = this.physics.add.group({
+        key: 'star',
+        repeat: 11,
+        setXY: { x: 12, y: 0, stepX: 70 },
+        });
+    
+    
 
+
+    // Add player
     this.player = this.physics.add.sprite(100, 450, 'dude');
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
@@ -49,7 +60,7 @@ export default class HelloWorldScene extends Phaser.Scene {
       this.player!.setVelocityX(-160); //Hversu hratt á að fara til vinstri
       // Check if space is pressed and player is touching the ground
       if (this.cursors!.space!.isDown && this.player!.body.touching.down) {
-        this.player!.setVelocityY(-160); // Hversu hátt á að hoppa
+        this.player!.setVelocityY(-250); // Hversu hátt á að hoppa
         this.player!.setVelocityX(-100); // Add additional velocity to the left
       }
     
@@ -58,13 +69,13 @@ export default class HelloWorldScene extends Phaser.Scene {
       this.player!.setVelocityX(160); // Hversu hratt á að fara til hægri 
       // Tvö skilyrði fyrir hoppi þ.e. þú þarft að ýta á space og þú þarft að vera á jörðinni
       if (this.cursors!.space!.isDown && this.player!.body.touching.down) {
-        this.player!.setVelocityY(-160); // Hversu hátt á að hoppa 
+        this.player!.setVelocityY(-250); // Hversu hátt á að hoppa 
         this.player!.setVelocityX(100); // Hvesu  mikið velocity þegar þú hoppar á ferð (hægri)
       }
 
     // ------------------------- STATIONARY JUMP -------------------------
     } else if (this.cursors!.space!.isDown && this.player!.body.touching.down) {
-      this.player!.setVelocityY(-160);
+      this.player!.setVelocityY(-250);
     } else {
       this.player!.setVelocityX(0);
     }
