@@ -17,6 +17,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
   }
 
+
   create() {
     this.add.image(400, 300, 'sky');
 
@@ -41,20 +42,29 @@ export default class HelloWorldScene extends Phaser.Scene {
         });
     
     
+    // physics for stars
+    this.physics.add.collider(this.stars, this.platforms);
+    
+    
+
 
 
     // Add player
     this.player = this.physics.add.sprite(100, 450, 'dude');
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
+    this.physics.add.collider(this.player, this.stars); //Þetta er ehv wonky hann er bara að bowla stjörnunum xD
+
 
     // Set up cursors
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.physics.add.collider(this.player, this.platforms);
+    this.physics.add.collider(this.player, this.platforms); 
+    
   }
 
   update() {
+
     // ------------------------- LEFT ----------------------------------
       if (this.cursors!.left!.isDown) {
       this.player!.setVelocityX(-160); //Hversu hratt á að fara til vinstri
