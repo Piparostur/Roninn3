@@ -6,12 +6,11 @@ class StartScene extends Phaser.Scene {
     create() {
       this.add.text(200, 200, 'Press any key to start', {
         fontSize: '32px',
-        color: '#fff',
-        align: 'center',
+        fill: '#fff', // Skoða betur 
       });
   
       this.input.keyboard.on('keydown', () => {
-        this.scene.start('HelloWorldScene');
+        this.scene.start('MainScene');
       });
     }
   }
