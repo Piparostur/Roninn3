@@ -6,8 +6,9 @@ export default class HelloWorldScene extends Phaser.Scene {
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   private stars?: Phaser.Physics.Arcade.Group;
   constructor() {
-    super('hello-world');
+  super('hello-world');
   }
+
 
   preload() {
     this.load.image('sky', 'assets/sky.png');
@@ -21,7 +22,7 @@ export default class HelloWorldScene extends Phaser.Scene {
   create() {
     this.add.image(400, 300, 'sky');
 
-    // Add platforms
+    // ------------------------- PLATFORMS -------------------------
     this.platforms = this.physics.add.staticGroup({
         key: 'ground',
         repeat: 11,
@@ -29,18 +30,17 @@ export default class HelloWorldScene extends Phaser.Scene {
       });
 
     this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-
     this.platforms.create(600, 400, 'ground');
     this.platforms.create(50, 250, 'ground');
     this.platforms.create(750, 220, 'ground');
     
-    // Add stars
+
+    // ------------------------- STARS -------------------------
     this.stars = this.physics.add.group({
         key: 'star',
         repeat: 11,
         setXY: { x: 12, y: 0, stepX: 70 },
         });
-    
     
     //Stjörnurnar fara ekki í gegnum platformana
     this.physics.add.collider(this.stars, this.platforms);
@@ -48,22 +48,19 @@ export default class HelloWorldScene extends Phaser.Scene {
     //uuuuuu... þetta lætur stjörnurnar klessa á hvor aðra og svo slæda þær saman út af mappinu ???
     this.physics.add.collider(this.stars, this.stars);
     
-    
 
-
-
-    // Add player
+    // ------------------------- PLAYER -------------------------
     this.player = this.physics.add.sprite(100, 450, 'dude');
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
     this.physics.add.collider(this.player, this.stars); //Þetta er ehv wonky hann er bara að bowla stjörnunum xD
-    
+    this.physics.add.collider(this.player, this.platforms);
 
-    // Set up cursors
+
+    // ------------------------- CURSORS -------------------------
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.physics.add.collider(this.player, this.platforms); 
-    
+      
   }
 
   update() {
@@ -76,7 +73,7 @@ export default class HelloWorldScene extends Phaser.Scene {
         this.player!.setVelocityY(-250); // Hversu hátt á að hoppa
         this.player!.setVelocityX(-100); // Add additional velocity to the left
       }
-    
+  
     // ------------------------- RIGHT ----------------------------------
     } else if (this.cursors!.right!.isDown) {
       this.player!.setVelocityX(160); // Hversu hratt á að fara til hægri 
