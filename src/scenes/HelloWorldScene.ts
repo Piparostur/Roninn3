@@ -16,11 +16,13 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.audio("music", "assets/BaB.mp3");
 }
 
 
   create() {
     this.add.image(400, 300, 'sky');
+    this.sound.play("music", {loop: true, volume: 0.1});
 
     // ------------------------- PLATFORMS -------------------------
     this.platforms = this.physics.add.staticGroup({
