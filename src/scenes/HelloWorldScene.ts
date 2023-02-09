@@ -7,7 +7,6 @@ export default class HelloWorldScene extends Phaser.Scene {
   private stars?: Phaser.Physics.Arcade.Group;
   private enemy?: Phaser.Physics.Arcade.Sprite;
   private bombs?: Phaser.Physics.Arcade.Group
-  private gameOver = false;
 
   private handleCollectStar(player: Phaser.GameObjects.GameObject, s: Phaser.GameObjects.GameObject) {
     const star = s as Phaser.Physics.Arcade.Image;
@@ -38,9 +37,23 @@ export default class HelloWorldScene extends Phaser.Scene {
 
   private handleHitBomb(player: Phaser.GameObjects.GameObject, b: Phaser.GameObjects.GameObject){
     this.physics.pause(); // Stop the game
+    this.sound.stopAll(); // Stop the music
     this.player?.setTint(0xff0000); // Turn the player red
     this.player?.anims.play('turn'); // Play the turn animation
-    this.gameOver = true; // Set the game over flag to true
+    var gameOverText = this.add.text(400, 300, "GAME OVER", {
+      fontFamily: 'gothic',
+      fontSize: '64px',
+      backgroundColor: '#000000', 
+      color: '#FF0000',
+      align: 'center',
+      fontStyle: 'bold',
+    });
+    gameOverText.setOrigin(0.5, 0.5);
+    this.time.delayedCall(3000, () => {
+      //Restart game
+      this.scene.restart();
+      console.log("game over");
+});
     }
 
   private score = 0;  // Score counter
@@ -58,7 +71,8 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     this.load.audio("music", "assets/BaB.mp3");
-    this.load.spritesheet('Ninja_enemy', 'assets/Ninja_enemy.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.spritesheet('Ninja_enemy', 'assets/Ninja_enemy.png', { frameWidth: 32, frameHeight: 48 })
+    this.load.spritesheet('Roninn', 'assets/Roninn.png', { frameWidth: 35, frameHeight: 56});
 }
 
 
@@ -113,7 +127,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     
 
     // ------------------------- PLAYER -------------------------
-    this.player = this.physics.add.sprite(100, 450, 'dude');
+    this.player = this.physics.add.sprite(100, 450, 'Roninn');
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
    // this.physics.add.collider(this.player, this.stars); //Þetta er ehv wonky hann er bara að bowla stjörnunum xD //Gæti verið kúl hugmynd af leik haha
@@ -124,20 +138,20 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.anims.create({
 
         key: 'left',
-        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }), //rammi 0-3 í spritesheet
+        frames: this.anims.generateFrameNumbers('Roninn', { start: 0, end: 4 }), //rammi 0-3 í spritesheet
         frameRate: 10,
         repeat: -1
     });
 
     this.anims.create({
       key: 'turn',
-      frames: [ { key: 'dude', frame: 4 } ], // Rammi 4 í spritesheet
+      frames: [ { key: 'Roninn', frame: 0 } ], // Rammi 4 í spritesheet
       frameRate: 20
     });
 
     this.anims.create({
         key: 'right',
-        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),  //rammi 5-8 í spritesheet
+        frames: this.anims.generateFrameNumbers('Roninn', { start: 6, end: 11 }),  //rammi 5-8 í spritesheet
         frameRate: 10,
         repeat: -1
     });
