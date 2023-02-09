@@ -6,15 +6,42 @@ export default class HelloWorldScene extends Phaser.Scene {
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   private stars?: Phaser.Physics.Arcade.Group;
   private enemy?: Phaser.Physics.Arcade.Sprite;
-  private bomb?: Phaser.Physics.Arcade.Group
+  private bombs?: Phaser.Physics.Arcade.Group
+  private gameOver = false;
 
   private handleCollectStar(player: Phaser.GameObjects.GameObject, s: Phaser.GameObjects.GameObject) {
     const star = s as Phaser.Physics.Arcade.Image;
     star.disableBody(true, true); // Disable the star from the world if it is collected
-
     this.score += 10; // Add 10 points to the score
-    this.scoreText?.setText(`SCORE: ${this.score}`); // Ef player nær stjörnum þá updateast þetta um 10 í score
-    } 
+    this.scoreText?.setText('SCORE: ${this.score}'); // Ef player nær stjörnum þá updateast þetta um 10 í score
+
+    if (this.stars?.countActive(true) === 0) { // Ef það eru engar stjörnur eftir þá spawnast nýjar (og ein bomba hér fyrir neðan)
+      this.stars.children.iterate(c => {
+        const star = c as Phaser.Physics.Arcade.Image;
+
+        star.enableBody(true, star.x, 0, true, true)});
+
+        const x = (player as Phaser.Physics.Arcade.Sprite).x < 400 
+        ? Phaser.Math.Between(400, 800) 
+        : Phaser.Math.Between(0, 400); // Spawnar bombu á random stað á x ásnum
+
+      const bomb: Phaser.Physics.Arcade.Image = this.bombs?.create(x, 16, 'bomb'); // Spawnar bombu
+      bomb?.setBounce(1); // Bomban skoppa upp og niður
+      bomb?.setCollideWorldBounds(true); // Bomban getur ekki farið út af mappinu
+      bomb?.setVelocity(Phaser.Math.Between(-200, 200), 20); // Bomban fer á random átt á x ásnum og niður á y ásnum
+
+      }
+
+
+
+  } 
+
+  private handleHitBomb(player: Phaser.GameObjects.GameObject, b: Phaser.GameObjects.GameObject){
+    this.physics.pause(); // Stop the game
+    this.player?.setTint(0xff0000); // Turn the player red
+    this.player?.anims.play('turn'); // Play the turn animation
+    this.gameOver = true; // Set the game over flag to true
+    }
 
   private score = 0;  // Score counter
   private scoreText?: Phaser.GameObjects.Text;  // Text object for score
@@ -175,6 +202,11 @@ export default class HelloWorldScene extends Phaser.Scene {
   //       this.bomb.body.setSize(10, 10);
   //       this.bomb.body.allowGravity(false);
   //       this.physics.add.collider(this.bomb, this.platforms);  
+
+    this.bombs = this.physics.add.group();
+    this.physics.add.collider(this.bombs, this.platforms);
+    this.physics.add.collider(this.player, this.bombs, this.handleHitBomb, undefined, this);
+
    }
 
 
