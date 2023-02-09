@@ -6,6 +6,7 @@ export default class HelloWorldScene extends Phaser.Scene {
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   private stars?: Phaser.Physics.Arcade.Group;
   private enemy?: Phaser.Physics.Arcade.Sprite;
+  private bomb?: Phaser.Physics.Arcade.Sprite;
   constructor() {
   super('hello-world');
   }
@@ -105,19 +106,24 @@ export default class HelloWorldScene extends Phaser.Scene {
 
     // ------------------------- CURSORS -------------------------
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    //Bæta við s key til að skjota
+    //this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     
 
 
     // ------------------------- SHOOTING -------------------------
-    let bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bomb');
-    bullet.setVelocityX(100);
-    bullet.setVelocityY(100);
-    this.physics.world.enable(bullet);
-    bullet.body.setSize(10, 10);
-    bullet.body.setAllowGravity(false);
-    
-      
-  }
+
+    //global function to shoot --> þetta virkar ekki
+  //   const shoot = () => {
+  //       this.bomb = this.physics.add.sprite(this.player.x, this.player.y, 'bomb');
+  //       this.bomb.setVelocityX(100);
+  //       this.bomb.setVelocityY(100);
+  //       this.physics.world.enable(this.bomb);
+  //       this.bomb.body.setSize(10, 10);
+  //       this.bomb.body.allowGravity(false);
+  //       this.physics.add.collider(this.bomb, this.platforms);  
+   }
 
   update() {
 
@@ -147,6 +153,12 @@ export default class HelloWorldScene extends Phaser.Scene {
     }
 
     // ------------------------- SHOOTING -------------------------
-    // Insert something cool here..
-  }
-}  
+    // bombs from player when preesing s
+    if (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)) {
+        //shoot(); 
+        console.log("Bæng!")
+    }
+
+
+   }
+ }  
