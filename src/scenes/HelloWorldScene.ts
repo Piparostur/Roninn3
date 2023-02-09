@@ -110,9 +110,12 @@ export default class HelloWorldScene extends Phaser.Scene {
 
         //Game Over text
         var gameOverText = this.add.text(400, 300, "Game Over", {
+            fontFamily: 'gothic',
             fontSize: '64px',
-            backgroundColor: '#fff', 
-            color: '#000',
+            backgroundColor: '#000000', 
+            color: '#FF0000',
+            align: 'center',
+            fontStyle: 'bold',
           });
         gameOverText.setOrigin(0.5, 0.5);
 
