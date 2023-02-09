@@ -6,12 +6,18 @@ export default class HelloWorldScene extends Phaser.Scene {
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   private stars?: Phaser.Physics.Arcade.Group;
   private enemy?: Phaser.Physics.Arcade.Sprite;
-  private bomb?: Phaser.Physics.Arcade.Sprite;
+  private bomb?: Phaser.Physics.Arcade.Group
 
   private handleCollectStar(player: Phaser.GameObjects.GameObject, s: Phaser.GameObjects.GameObject) {
     const star = s as Phaser.Physics.Arcade.Image;
     star.disableBody(true, true); // Disable the star from the world if it is collected
+
+    this.score += 10; // Add 10 points to the score
+    this.scoreText?.setText(`SCORE: ${this.score}`); // Ef player nær stjörnum þá updateast þetta um 10 í score
     } 
+
+  private score = 0;  // Score counter
+  private scoreText?: Phaser.GameObjects.Text;  // Text object for score
 
   constructor() {
   super('hello-world');
@@ -31,6 +37,13 @@ export default class HelloWorldScene extends Phaser.Scene {
 
   create() {
     this.add.image(400, 300, 'sky');
+
+    // ------------------------- SCORE ------------------------
+
+    this.scoreText = this.add.text(16, 16, 'SCORE: 0', {        // Score text
+        fontSize: '20px', 
+        color: '#000', 
+        fontFamily: 'Arial', });
 
     // ------------------------- TEXT -------------------------
 
