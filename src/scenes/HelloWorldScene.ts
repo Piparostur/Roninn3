@@ -7,6 +7,12 @@ export default class HelloWorldScene extends Phaser.Scene {
   private stars?: Phaser.Physics.Arcade.Group;
   private enemy?: Phaser.Physics.Arcade.Sprite;
   private bomb?: Phaser.Physics.Arcade.Sprite;
+
+  private handleCollectStar(player: Phaser.GameObjects.GameObject, s: Phaser.GameObjects.GameObject) {
+    const star = s as Phaser.Physics.Arcade.Image;
+    star.disableBody(true, true); // Disable the star from the world if it is collected
+    } 
+
   constructor() {
   super('hello-world');
   }
@@ -158,10 +164,6 @@ export default class HelloWorldScene extends Phaser.Scene {
   //       this.physics.add.collider(this.bomb, this.platforms);  
    }
 
-   private handleCollectStar(player: Phaser.GameObjects.GameObject, s: Phaser.GameObjects.GameObject) {
-    const star = s as Phaser.Physics.Arcade.Image;
-    star.disableBody(true, true); // Disable the star from the world if it is collected
-    } 
 
   update() {
 
