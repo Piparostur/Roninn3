@@ -161,7 +161,7 @@ export default class HelloWorldScene extends Phaser.Scene {
         this.sound.stopAll();
 
         //Game Over text
-        var gameOverText = this.add.text(400, 300, "Game Over", {
+        var gameOverText = this.add.text(400, 300, "GAME OVER", {
             fontFamily: 'gothic',
             fontSize: '64px',
             backgroundColor: '#000000', 
