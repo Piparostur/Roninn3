@@ -53,7 +53,12 @@ export default class HelloWorldScene extends Phaser.Scene {
         repeat: 11,
         setXY: { x: 12, y: 0, stepX: 70 },
         });
-    
+
+        this.stars.children.iterate (c=> {
+          const star = c as Phaser.Physics.Arcade.Image;
+          star.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+        });
+        
     //Stjörnurnar fara ekki í gegnum platformana
     this.physics.add.collider(this.stars, this.platforms);
 
@@ -72,20 +77,20 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.anims.create({
 
         key: 'left',
-        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }), //rammi 0-3 í spritesheet
         frameRate: 10,
         repeat: -1
     });
 
     this.anims.create({
       key: 'turn',
-      frames: [ { key: 'dude', frame: 4 } ],
+      frames: [ { key: 'dude', frame: 4 } ], // Rammi 4 í spritesheet
       frameRate: 20
     });
 
     this.anims.create({
         key: 'right',
-        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),  //rammi 5-8 í spritesheet
         frameRate: 10,
         repeat: -1
     });
