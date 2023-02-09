@@ -56,9 +56,9 @@ export default class HelloWorldScene extends Phaser.Scene {
 
         this.stars.children.iterate (c=> {
           const star = c as Phaser.Physics.Arcade.Image;
-          star.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+          star.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8)); // Stjörnurnar skoppa upp og niður
         });
-        
+
     //Stjörnurnar fara ekki í gegnum platformana
     this.physics.add.collider(this.stars, this.platforms);
 
@@ -70,7 +70,8 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.player = this.physics.add.sprite(100, 450, 'dude');
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
-    this.physics.add.collider(this.player, this.stars); //Þetta er ehv wonky hann er bara að bowla stjörnunum xD
+   // this.physics.add.collider(this.player, this.stars); //Þetta er ehv wonky hann er bara að bowla stjörnunum xD //Gæti verið kúl hugmynd af leik haha
+    this.physics.add.overlap(this.player, this.stars, this.handleCollectStar, undefined, this);
     this.physics.add.collider(this.player, this.platforms);
 
     // -------------------  PLAYER ANIMATIONS -------------------
@@ -132,6 +133,9 @@ export default class HelloWorldScene extends Phaser.Scene {
       });
     });
 
+  
+
+
 
     // ------------------------- CURSORS -------------------------
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -153,6 +157,11 @@ export default class HelloWorldScene extends Phaser.Scene {
   //       this.bomb.body.allowGravity(false);
   //       this.physics.add.collider(this.bomb, this.platforms);  
    }
+
+   private handleCollectStar(player: Phaser.GameObjects.GameObject, s: Phaser.GameObjects.GameObject) {
+    const star = s as Phaser.Physics.Arcade.Image;
+    star.disableBody(true, true); // Disable the star from the world if it is collected
+    } 
 
   update() {
 
