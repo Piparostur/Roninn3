@@ -68,6 +68,27 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.stars); //Þetta er ehv wonky hann er bara að bowla stjörnunum xD
     this.physics.add.collider(this.player, this.platforms);
 
+    // -------------------  PLAYER ANIMATIONS -------------------
+    this.anims.create({
+
+        key: 'left',
+        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    this.anims.create({
+      key: 'turn',
+      frames: [ { key: 'dude', frame: 4 } ],
+      frameRate: 20
+    });
+
+    this.anims.create({
+        key: 'right',
+        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+        frameRate: 10,
+        repeat: -1
+    });
 
     // --------------------- Ninja Enemy -------------------------
     this.enemy = this.physics.add.sprite(400, 450, 'Ninja_enemy');
@@ -130,15 +151,17 @@ export default class HelloWorldScene extends Phaser.Scene {
     // ------------------------- LEFT ----------------------------------
       if (this.cursors!.left!.isDown) {
       this.player!.setVelocityX(-160); //Hversu hratt á að fara til vinstri
+      this.player!.anims.play('left', true); // Spila animation
       // Check if space is pressed and player is touching the ground
       if (this.cursors!.space!.isDown && this.player!.body.touching.down) {
         this.player!.setVelocityY(-250); // Hversu hátt á að hoppa
-        this.player!.setVelocityX(-100); // Add additional velocity to the left
+        this.player!.setVelocityX(-100);// Add additional velocity to the left
       }
   
     // ------------------------- RIGHT ----------------------------------
     } else if (this.cursors!.right!.isDown) {
       this.player!.setVelocityX(160); // Hversu hratt á að fara til hægri 
+      this.player!.anims.play('right', true); // Spila animation
       // Tvö skilyrði fyrir hoppi þ.e. þú þarft að ýta á space og þú þarft að vera á jörðinni
       if (this.cursors!.space!.isDown && this.player!.body.touching.down) {
         this.player!.setVelocityY(-250); // Hversu hátt á að hoppa 
@@ -150,6 +173,7 @@ export default class HelloWorldScene extends Phaser.Scene {
       this.player!.setVelocityY(-250);
     } else {
       this.player!.setVelocityX(0);
+      this.player!.anims.play('turn');
     }
 
     // ------------------------- SHOOTING -------------------------
