@@ -13,7 +13,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     const star = s as Phaser.Physics.Arcade.Image;
     star.disableBody(true, true); // Disable the star from the world if it is collected
     this.score += 10; // Add 10 points to the score
-    this.scoreText?.setText('SCORE: ${this.score}'); // Ef player nær stjörnum þá updateast þetta um 10 í score
+    this.scoreText?.setText(`SCORE: ${this.score}`); // Ef player nær stjörnum þá updateast þetta um 10 í score
 
     if (this.stars?.countActive(true) === 0) { // Ef það eru engar stjörnur eftir þá spawnast nýjar (og ein bomba hér fyrir neðan)
       this.stars.children.iterate(c => {
