@@ -1,8 +1,10 @@
 import Phaser from 'phaser';
-import class HelloWorldScene  './HelloWorldScene';
+//connect to the HelloWorldScene
+import HelloWorldScene from './HelloWorldScene';
 
 export default class StartScene extends Phaser.Scene {
     constructor() {
+      HelloWorldScene
       super({ key: 'StartScene' });
     }
   
@@ -15,8 +17,7 @@ export default class StartScene extends Phaser.Scene {
   
       this.input.keyboard.on('keydown', () => {
         //this.scene.start('HelloWorldScene');
-        this.scene.start('HelloWorldScene');
-
+        this.scene.start('hello-world'); // Fixið var að nota super key í staðinn nafnið a scene
       });
     }
   }
