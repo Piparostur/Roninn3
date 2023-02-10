@@ -40,7 +40,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.sound.stopAll(); // Stop the music
     this.player?.setTint(0xff0000); // Turn the player red
     this.player?.anims.play('turn'); // Play the turn animation
-    var gameOverText = this.add.text(400, 300, "GAME OVER", {
+    var gameOverText = this.add.text(400, 300, "GAME OVER\nYour Score: " + this.score, {
       fontFamily: 'gothic',
       fontSize: '64px',
       backgroundColor: '#000000', 
@@ -51,6 +51,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     gameOverText.setOrigin(0.5, 0.5);
     this.time.delayedCall(3000, () => {
       //Restart game
+      this.score = 0;
       this.scene.restart();
       console.log("game over");
 });
@@ -189,6 +190,7 @@ export default class HelloWorldScene extends Phaser.Scene {
         // Pause 3 seconds and restart game
         this.time.delayedCall(3000, () => {
             //Restart game
+            this.score = 0;
             this.scene.restart();
             console.log("game over");
             
