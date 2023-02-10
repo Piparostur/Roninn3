@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 
 import HelloWorldScene from './scenes/HelloWorldScene'
+import StartScreen from './scenes/StartScreen'
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,
@@ -16,7 +17,8 @@ const config: Phaser.Types.Core.GameConfig = {
 			gravity: { y: 200 }
 		}
 	},
-	scene: [HelloWorldScene] // held að start scene fari líka hérna en virkaði ekki þarf að tweaka ehv.
+	scene: [HelloWorldScene]
+	//scene: [StartScreen, HelloWorldScene] // held að start scene fari líka hérna en virkaði ekki þarf að tweaka ehv.
 
 
 }

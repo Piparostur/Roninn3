@@ -84,7 +84,8 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.scoreText = this.add.text(16, 16, 'SCORE: 0', {        // Score text
         fontSize: '20px', 
         color: '#000', 
-        fontFamily: 'Arial', });
+        fontFamily: 'Arial', 
+      });
 
     // ------------------------- TEXT -------------------------
 
@@ -175,9 +176,9 @@ export default class HelloWorldScene extends Phaser.Scene {
         this.sound.stopAll();
 
         //Game Over text
-        var gameOverText = this.add.text(400, 300, "GAME OVER", {
+        var gameOverText = this.add.text(400, 300, "GAME OVER \nYour score: " + this.score, {
             fontFamily: 'gothic',
-            fontSize: '64px',
+            fontSize: '48px',
             backgroundColor: '#000000', 
             color: '#FF0000',
             align: 'center',
@@ -190,6 +191,7 @@ export default class HelloWorldScene extends Phaser.Scene {
             //Restart game
             this.scene.restart();
             console.log("game over");
+            
       });
     });
 
