@@ -247,6 +247,8 @@ export default class HelloWorldScene extends Phaser.Scene {
       }
   
     // ------------------------- RIGHT ----------------------------------
+    // if d key is pressed
+    
     } else if (this.cursors!.right!.isDown) {
       this.player!.setVelocityX(160); // Hversu hratt á að fara til hægri 
       this.player!.anims.play('right', true); // Spila animation
@@ -255,6 +257,16 @@ export default class HelloWorldScene extends Phaser.Scene {
         this.player!.setVelocityY(-250); // Hversu hátt á að hoppa 
         this.player!.setVelocityX(100); // Hvesu  mikið velocity þegar þú hoppar á ferð (hægri)
       }
+
+      // ---------------------- DOWN ----------------------
+      /*
+          Getum kannski sett ehv hérna eins og td. ef þú ýtir á down þá popparu 
+          í gegnum platformið sem þú ert á. Eða t.d ehv animation að það kemur
+          svona verndar skjöldur í kringum þig hugsaðu rúllu vélmennin í star wars 
+          episodes 1-3.
+
+      */
+
 
     // ------------------------- STATIONARY JUMP -------------------------
     } else if (this.cursors!.space!.isDown && this.player!.body.touching.down) {
