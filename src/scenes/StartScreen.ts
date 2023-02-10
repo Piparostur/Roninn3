@@ -13,6 +13,7 @@ export default class StartScene extends Phaser.Scene {
         fontSize: '32px',
         color: '#fff', // Skoða betur 
         backgroundColor: '#000',
+        shadow: { color: '#000', blur: 2, stroke: true, fill: true }
       });
   
       this.input.keyboard.on('keydown', () => {

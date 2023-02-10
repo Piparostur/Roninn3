@@ -87,6 +87,9 @@ export default class HelloWorldScene extends Phaser.Scene {
         color: '#000', 
         fontFamily: 'Arial', 
       });
+    
+    // ---------------------- HEALTH --------------------------
+    
 
     // ------------------------- TEXT -------------------------
 
@@ -164,9 +167,9 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.enemy.setCollideWorldBounds(true);
     this.physics.add.collider(this.enemy, this.platforms);
     if (this.player.x > this.enemy.x) {
-        this.enemy.setVelocityX(-160);
+        this.enemy.setVelocityX(-280);
     } else {
-        this.enemy.setVelocityX(160);
+        this.enemy.setVelocityX(280);
     }
 
     // -------------- Game Over if player hits enemy --------------
