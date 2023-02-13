@@ -10,15 +10,19 @@ export default class HelloWorldScene extends Phaser.Scene {
 
   private handleCollectStar(player: Phaser.GameObjects.GameObject, s: Phaser.GameObjects.GameObject) {
     const star = s as Phaser.Physics.Arcade.Image;
-    star.disableBody(true, true); // Disable the star from the world if it is collected
+    star.disableBody(true, true) // Disable the star from the world if it is collected
     this.score += 10; // Add 10 points to the score
     this.scoreText?.setText(`SCORE: ${this.score}`); // Ef player nær stjörnum þá updateast þetta um 10 í score
+    this.sound.play('Beep', {volume: 0.1}); // Spilar hljóð ef player nær stjörnum
+
+    
+
 
     if (this.stars?.countActive(true) === 0) { // Ef það eru engar stjörnur eftir þá spawnast nýjar (og ein bomba hér fyrir neðan)
       this.stars.children.iterate(c => {
         const star = c as Phaser.Physics.Arcade.Image;
 
-        star.enableBody(true, star.x, 0, true, true)});
+        star.enableBody(true, star.x, 0, true, true)}); 
 
         const x = (player as Phaser.Physics.Arcade.Sprite).x < 400 
         ? Phaser.Math.Between(400, 800) 
@@ -30,10 +34,7 @@ export default class HelloWorldScene extends Phaser.Scene {
       bomb?.setVelocity(Phaser.Math.Between(-200, 200), 20); // Bomban fer á random átt á x ásnum og niður á y ásnum
 
       }
-
-
-
-  } 
+    }
 
   private handleHitBomb(player: Phaser.GameObjects.GameObject, b: Phaser.GameObjects.GameObject){
     this.physics.pause(); // Stop the game
@@ -69,12 +70,19 @@ export default class HelloWorldScene extends Phaser.Scene {
   private healthbar? : Phaser.GameObjects.Graphics & Phaser.GameObjects.GameObject;
   private health = 100
 
+  private handleHitEnemy(player: Phaser.GameObjects.GameObject, e: Phaser.GameObjects.GameObject){
+
+
+  }
+
+
 
 
 
   preload() {
     this.load.image('sky', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
+    this.load.audio('Beep', 'assets/Beep.mp3');
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
@@ -83,6 +91,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.load.spritesheet('Ninja_enemy', 'assets/Ninja_enemy.png', { frameWidth: 32, frameHeight: 48 })
     this.load.spritesheet('Roninn', 'assets/Roninn.png', { frameWidth: 35, frameHeight: 56});
     this.load.image('healthbar', 'assets/healthbar.png');
+
 }
 
 
@@ -126,7 +135,9 @@ export default class HelloWorldScene extends Phaser.Scene {
 
     
     
-        this.add.graphics().fillStyle(0xff0000, 1).fillRect(34, 555, 120, 25) ;
+    this.healthbar = this.add.graphics().fillStyle(0xff0000, 1).fillRect(34, 555, 120, 25) as Phaser.GameObjects.Graphics & Phaser.GameObjects.GameObject;
+
+    const healthbar = 
     
     this.add.image(10, 525, 'healthbar').setScale(0.3) .setDisplayOrigin(0, 0);
         
@@ -141,7 +152,7 @@ export default class HelloWorldScene extends Phaser.Scene {
 
         this.stars.children.iterate (c=> {
           const star = c as Phaser.Physics.Arcade.Image;
-          star.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8)); // Stjörnurnar skoppa upp og niður
+          star.setBounceY(Phaser.Math.FloatBetween(0.1, 0.3)); // Stjörnurnar skoppa upp og niður
         });
 
     //Stjörnurnar fara ekki í gegnum platformana
