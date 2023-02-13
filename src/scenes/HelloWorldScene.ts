@@ -66,6 +66,12 @@ export default class HelloWorldScene extends Phaser.Scene {
   }
 
 
+  private healthbar? : Phaser.GameObjects.Graphics & Phaser.GameObjects.GameObject;
+  private health = 100
+
+
+
+
   preload() {
     this.load.image('sky', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
@@ -76,10 +82,14 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.load.audio("game_over", "assets/game_over.mp3")
     this.load.spritesheet('Ninja_enemy', 'assets/Ninja_enemy.png', { frameWidth: 32, frameHeight: 48 })
     this.load.spritesheet('Roninn', 'assets/Roninn.png', { frameWidth: 35, frameHeight: 56});
+    this.load.image('healthbar', 'assets/healthbar.png');
 }
 
 
   create() {
+
+
+
     this.add.image(400, 300, 'sky');
 
     // ------------------------- SCORE ------------------------
@@ -90,8 +100,7 @@ export default class HelloWorldScene extends Phaser.Scene {
         fontFamily: 'Arial', 
       });
     
-    // ---------------------- HEALTH --------------------------
-    
+
 
     // ------------------------- TEXT -------------------------
 
@@ -112,6 +121,15 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.platforms.create(600, 400, 'ground');
     this.platforms.create(50, 250, 'ground');
     this.platforms.create(750, 220, 'ground');
+
+        // ---------------------- HEALTH --------------------------------
+
+    
+    
+        this.add.graphics().fillStyle(0xff0000, 1).fillRect(34, 555, 120, 25) ;
+    
+    this.add.image(10, 525, 'healthbar').setScale(0.3) .setDisplayOrigin(0, 0);
+        
     
 
     // ------------------------- STARS -------------------------
@@ -168,11 +186,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.enemy.setBounce(0.2);
     this.enemy.setCollideWorldBounds(true);
     this.physics.add.collider(this.enemy, this.platforms);
-    if (this.player.x > this.enemy.x) {
-        this.enemy.setVelocityX(-280);
-    } else {
-        this.enemy.setVelocityX(280);
-    }
+
 
     // -------------- Game Over if player hits enemy --------------
     this.physics.add.collider(this.player, this.enemy, () => {
