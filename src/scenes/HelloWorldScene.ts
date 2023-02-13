@@ -38,7 +38,7 @@ export default class HelloWorldScene extends Phaser.Scene {
   private handleHitBomb(player: Phaser.GameObjects.GameObject, b: Phaser.GameObjects.GameObject){
     this.physics.pause(); // Stop the game
     this.sound.stopAll(); // Stop the music
-    this.sound.play('game_over'); // Play the game over sound
+    this.sound.play('game_over', {volume: 0.5}); // Play the game over sound
     this.player?.setTint(0xff0000); // Turn the player red
     this.player?.anims.play('turn'); // Play the turn animation
     var gameOverText = this.add.text(400, 300, "GAME OVER\nYour Score: " + this.score, {
@@ -50,7 +50,7 @@ export default class HelloWorldScene extends Phaser.Scene {
       fontStyle: 'bold',
     });
     gameOverText.setOrigin(0.5, 0.5);
-    this.time.delayedCall(3000, () => {
+    this.time.delayedCall(4000, () => {
       //Restart game
       this.score = 0;
       this.scene.restart();
@@ -73,7 +73,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     this.load.audio("music", "assets/BaB.mp3");
-    this.load.audio("game_over", "assets/game_over.wav")
+    this.load.audio("game_over", "assets/game_over.mp3")
     this.load.spritesheet('Ninja_enemy', 'assets/Ninja_enemy.png', { frameWidth: 32, frameHeight: 48 })
     this.load.spritesheet('Roninn', 'assets/Roninn.png', { frameWidth: 35, frameHeight: 56});
 }
@@ -180,7 +180,7 @@ export default class HelloWorldScene extends Phaser.Scene {
         //Mikilvægt að stoppa sound fyrst greinilega því annars byrjar leikurinn að spila lagið aftur 
         //ofan á original playið.
         this.sound.stopAll();
-        this.sound.play("game_over", {volume: 0.1});
+        this.sound.play("game_over", {volume: 0.5});
 
         //Game Over text
         var gameOverText = this.add.text(400, 300, "GAME OVER \nYour score: " + this.score, {
@@ -191,10 +191,10 @@ export default class HelloWorldScene extends Phaser.Scene {
             align: 'center',
             fontStyle: 'bold',
           });
-        gameOverText.setOrigin(0.5, 0.5);
+        gameOverText.setOrigin(0.5, 0.3);
 
         // Pause 3 seconds and restart game
-        this.time.delayedCall(3000, () => {
+        this.time.delayedCall(4000, () => {
             //Restart game
             this.score = 0;
             this.scene.restart();
